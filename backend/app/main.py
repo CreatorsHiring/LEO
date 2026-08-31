@@ -79,10 +79,14 @@ async def chat_stream(request: ChatRequest) -> StreamingResponse:
         from backend.app.llm.ollama import OllamaClient
         from backend.app.router import PromptRouter
 
+        from backend.app.route_validator import RouteValidator
+
         router = PromptRouter()
+        validator = RouteValidator()
         llm = OllamaClient()
 
         decision = await router.route(request.message, has_documents=bool(request.document_ids))
+        decision = validator.validate(decision, request.message)
         yield _sse("route", decision.model_dump())
 
         chunks: list[RetrievedChunk] = []
