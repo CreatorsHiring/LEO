@@ -138,6 +138,8 @@ ollama pull qwen2.5-coder:3b-instruct # code
 ollama pull qwen2.5-math:1.5b-instruct # math
 ollama pull nomic-embed-text          # default embedding model
 ```
+## FOR NOW ONLY INSTALL - qwen2.5:1.5b-instruct, qwen2.5:3b, qwen2.5-coder:3b, qwen2.5-coder:1.5b
+the qwen2.5:1.5b-instruct is the router you can change it from config.py and other models from /llm/registry.py
 
 ---
 
