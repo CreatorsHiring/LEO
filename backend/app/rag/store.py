@@ -15,7 +15,7 @@ from backend.app.rag.extractors import extract_text
 class DocumentStore:
     def __init__(self) -> None:
         self.settings = get_settings()
-        self.client = QdrantClient(url=self.settings.qdrant_url)
+        self.client = QdrantClient(url=self.settings.qdrant_url) # for testing locally location=":memory:"
         self._sentence_encoder = None
 
     def _ensure_collection(self, vector_size: int) -> None:

@@ -7,15 +7,17 @@
   <style>
     :root {
       color-scheme: dark;
-      --bg: #0f1115;
-      --panel: #171a21;
-      --panel-2: #20242d;
-      --line: #303744;
-      --text: #eef2f7;
-      --muted: #a7b0bf;
-      --primary: #7cc7ff;
+      --bg: #121212;
+      --panel: #1e1e1e;
+      --panel-2: #2d2d2d;
+      --line: #333333;
+      --text: #cccccc;
+      --muted: #858585;
+      --primary: #4daafc;
       --accent: #8ee6b1;
       --danger: #ff8f8f;
+      --code-bg: #000000;
+      --code-header: #252526;
     }
     * { box-sizing: border-box; }
     body {
@@ -23,19 +25,19 @@
       min-height: 100vh;
       background: var(--bg);
       color: var(--text);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       letter-spacing: 0;
     }
     .shell { display: grid; grid-template-columns: 280px minmax(0, 1fr); min-height: 100vh; }
     aside {
       border-right: 1px solid var(--line);
-      background: #13161c;
+      background: var(--bg);
       padding: 20px;
       display: flex;
       flex-direction: column;
       gap: 20px;
     }
-    .brand h1 { margin: 0; font-size: 26px; line-height: 32px; }
+    .brand h1 { margin: 0; font-size: 26px; line-height: 32px; color: #ffffff; }
     .brand p, header p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
     .status-grid, .docs { display: grid; gap: 10px; }
     .status-card, .doc {
@@ -44,8 +46,160 @@
       border-radius: 8px;
       padding: 12px;
     }
+
+    /* Markdown & Typography Styling */
+    .markdown-content {
+      font-size: 15px;
+      color: #cccccc;
+    }
+    .markdown-content > *:first-child { margin-top: 0; }
+    .markdown-content > *:last-child { margin-bottom: 0; }
+    .markdown-content p {
+      margin: 0.8em 0;
+      line-height: 1.6;
+    }
+    .markdown-content h1,
+    .markdown-content h2,
+    .markdown-content h3,
+    .markdown-content h4,
+    .markdown-content h5,
+    .markdown-content h6 {
+      color: #ffffff;
+      font-weight: 600;
+      margin: 1.2em 0 0.5em 0;
+      line-height: 1.3;
+    }
+    .markdown-content h1 { font-size: 1.4em; border-bottom: 1px solid var(--line); padding-bottom: 0.3em; }
+    .markdown-content h2 { font-size: 1.25em; border-bottom: 1px solid var(--line); padding-bottom: 0.25em; }
+    .markdown-content h3 { font-size: 1.1em; }
+    .markdown-content h4 { font-size: 1.0em; }
+
+    .markdown-content ul,
+    .markdown-content ol {
+      margin: 0.6em 0;
+      padding-left: 1.5em;
+    }
+    .markdown-content li {
+      margin: 0.3em 0;
+      line-height: 1.6;
+    }
+    .markdown-content blockquote {
+      margin: 0.8em 0;
+      padding: 0.4em 1em;
+      border-left: 3px solid var(--primary);
+      background: rgba(77, 170, 252, 0.08);
+      color: var(--muted);
+      border-radius: 0 4px 4px 0;
+    }
+    .markdown-content blockquote p { margin: 0.4em 0; }
+    .markdown-content hr {
+      border: 0;
+      height: 1px;
+      background: var(--line);
+      margin: 1.2em 0;
+    }
+    .markdown-content a {
+      color: var(--primary);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .markdown-content code:not(.code-block-code) {
+      font-family: ui-monospace, SFMono-Regular, Consolas, "Courier New", monospace;
+      font-size: 0.9em;
+      background: rgba(255, 255, 255, 0.08);
+      color: #ce9178;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* ChatGPT-style Code Block (VS Code Theme) */
+    .code-block-container {
+      margin: 1.2em 0;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--code-bg);
+      overflow: hidden;
+    }
+    .code-block-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--code-header);
+      padding: 6px 12px;
+      border-bottom: 1px solid var(--line);
+      font-size: 12px;
+      color: #9e9e9e;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+    .code-block-header .copy-btn {
+      background: transparent;
+      border: none;
+      color: #9e9e9e;
+      font-size: 12px;
+      height: 24px;
+      padding: 0 6px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .code-block-header .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+    .code-block-header .copy-btn.copied {
+      color: var(--accent);
+    }
+    .code-block-body {
+      margin: 0;
+      padding: 16px;
+      overflow-x: auto;
+      font-family: ui-monospace, SFMono-Regular, Consolas, "Courier New", monospace;
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: #d4d4d4;
+      tab-size: 4;
+    }
+    .code-block-code {
+      font-family: inherit;
+      white-space: pre;
+      word-break: normal;
+    }
+
+    /* VS Code Syntax Highlighting */
+    .token-keyword { color: #569cd6; }
+    .token-control { color: #c586c0; }
+    .token-string { color: #ce9178; }
+    .token-comment { color: #6a9955; }
+    .token-function { color: #dcdcaa; }
+    .token-number { color: #b5cea8; }
+    .token-class { color: #4ec9b0; }
+
+    /* Markdown Table Styling */
+    .markdown-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1em 0;
+      font-size: 14px;
+    }
+    .markdown-content th,
+    .markdown-content td {
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      text-align: left;
+    }
+    .markdown-content th {
+      background: var(--panel-2);
+      color: #ffffff;
+      font-weight: 600;
+    }
+    .markdown-content tr:nth-child(even) td {
+      background: rgba(255, 255, 255, 0.02);
+    }
     .label { color: var(--muted); font-size: 12px; text-transform: uppercase; font-weight: 700; }
-    .value { margin-top: 5px; font-size: 14px; overflow-wrap: anywhere; }
+    .value { margin-top: 5px; font-size: 14px; overflow-wrap: anywhere; color: #ffffff; }
     .pill-row { display: flex; gap: 8px; flex-wrap: wrap; }
     .pill {
       border: 1px solid var(--line);
@@ -53,9 +207,9 @@
       padding: 5px 9px;
       color: var(--muted);
       font-size: 12px;
-      background: #101319;
+      background: transparent;
     }
-    .pill.active { color: #061014; background: var(--primary); border-color: var(--primary); }
+    .pill.active { color: #ffffff; background: var(--line); }
     .doc { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
     main { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; min-height: 100vh; }
     header {
@@ -65,39 +219,40 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      background: rgba(15, 17, 21, 0.92);
+      background: rgba(18, 18, 18, 0.95);
     }
-    header h2 { margin: 0; font-size: 18px; line-height: 24px; }
+    header h2 { margin: 0; font-size: 18px; line-height: 24px; color: #ffffff; }
     #chat { overflow-y: auto; padding: 28px 24px 140px; }
     .thread {
-      width: min(920px, 100%);
+      width: min(850px, 100%);
       margin: 0 auto;
       display: grid;
-      gap: 18px;
+      gap: 24px;
     }
-    .message { display: flex; gap: 12px; align-items: flex-start; }
+    .message { display: flex; gap: 16px; align-items: flex-start; }
     .message.user { flex-direction: row-reverse; }
     .avatar {
-      width: 34px;
-      height: 34px;
-      border-radius: 8px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
       display: grid;
       place-items: center;
-      background: var(--panel-2);
-      border: 1px solid var(--line);
-      font-weight: 700;
+      background: #2d2d2d;
+      color: #ffffff;
+      border: none;
+      font-weight: 600;
+      font-size: 14px;
       flex: 0 0 auto;
     }
-    .user .avatar { background: #143047; border-color: #245275; }
+    .user .avatar { background: #3b82f6; }
     .bubble {
-      max-width: min(760px, 86%);
+      max-width: min(780px, 90%);
       border: 1px solid var(--line);
       background: var(--panel);
-      border-radius: 8px;
-      padding: 14px 16px;
-      white-space: pre-wrap;
+      border-radius: 12px;
+      padding: 16px 20px;
       overflow-wrap: anywhere;
-      line-height: 1.55;
+      line-height: 1.6;
     }
     .meta {
       display: flex;
@@ -217,7 +372,9 @@
             <div class="avatar">AI</div>
             <div class="bubble">
               <div class="meta"><span>LEO</span><span>local workbench</span></div>
-              Ask a question or upload a PDF, DOCX, or text file. The router will select a local expert model and use retrieved document context when relevant.
+              <div class="markdown-content">
+                <p>Ask a question or upload a PDF, DOCX, or text file. The router will select a local expert model and use retrieved document context when relevant.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -280,6 +437,27 @@
       await streamChat(message);
     });
 
+    // Copy to clipboard handler
+    document.addEventListener("click", (e) => {
+      const copyBtn = e.target.closest(".copy-btn");
+      if (!copyBtn) return;
+      const container = copyBtn.closest(".code-block-container");
+      if (!container) return;
+      const codeEl = container.querySelector(".code-block-code");
+      if (!codeEl) return;
+      const textToCopy = codeEl.textContent;
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        copyBtn.classList.add("copied");
+        copyBtn.innerHTML = `<span>✓</span><span>Copied!</span>`;
+        setTimeout(() => {
+          copyBtn.classList.remove("copied");
+          copyBtn.innerHTML = `<span>📋</span><span>Copy</span>`;
+        }, 2000);
+      }).catch(err => {
+        console.error("Failed to copy text: ", err);
+      });
+    });
+
     async function streamChat(message) {
       const assistant = addMessage("assistant", "", { meta: ["routing..."] });
       const body = {
@@ -317,18 +495,23 @@
               assistant.meta.textContent += ` | model: ${event.data.model}`;
             }
             if (event.type === "retrieval") renderCitations(assistant.citations, event.data.chunks);
-            if (event.type === "warning") assistant.text.textContent += "\n" + event.data.message + "\n";
-            if (event.type === "error") assistant.text.innerHTML += `<span class="error">${escapeHtml(event.data.message)}</span>`;
+            if (event.type === "warning") {
+              answer += "\n" + event.data.message + "\n";
+              assistant.renderContent(answer);
+            }
+            if (event.type === "error") {
+              assistant.renderContent(answer + `\n<span class="error">${escapeHtml(event.data.message)}</span>`);
+            }
             if (event.type === "token") {
               answer += event.data.text;
-              assistant.text.textContent = answer;
+              assistant.renderContent(answer);
               scrollChat();
             }
           }
         }
         state.history.push({ role: "assistant", content: answer });
       } catch (error) {
-        assistant.text.innerHTML = `<span class="error">${escapeHtml(error.message)}</span>`;
+        assistant.renderContent(`<span class="error">${escapeHtml(error.message)}</span>`);
       }
     }
 
@@ -343,15 +526,35 @@
       const meta = document.createElement("div");
       meta.className = "meta";
       meta.textContent = options.meta ? options.meta.join(" | ") : (role === "assistant" ? "LEO" : "You");
-      const text = document.createElement("div");
-      text.textContent = content;
-      if (options.error) text.className = "error";
+      
+      const contentEl = document.createElement("div");
+      if (role === "assistant") {
+        contentEl.className = "markdown-content";
+      } else {
+        contentEl.style.whiteSpace = "pre-wrap";
+      }
+
+      if (options.error) contentEl.className += " error";
+      
       const citations = document.createElement("div");
-      bubble.append(meta, text, citations);
+      bubble.append(meta, contentEl, citations);
       wrapper.append(avatar, bubble);
       thread.appendChild(wrapper);
+
+      const renderContent = (rawText) => {
+        if (role === "assistant" && !options.error) {
+          contentEl.innerHTML = parseMarkdown(rawText);
+        } else {
+          contentEl.textContent = rawText;
+        }
+      };
+
+      if (content) {
+        renderContent(content);
+      }
+
       scrollChat();
-      return { wrapper, bubble, meta, text, citations };
+      return { wrapper, bubble, meta, contentEl, citations, renderContent };
     }
 
     function renderCitations(target, chunks) {
@@ -396,6 +599,216 @@
     function escapeHtml(value) {
       return value.replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[char]));
     }
+
+    /* Lightweight Air-Gapped Safe Streaming Markdown Parser */
+    function parseMarkdown(md) {
+      if (!md) return "";
+      
+      // Step 1: Extract and store fenced code blocks safely
+      const codeBlocks = [];
+      let text = md.replace(/```([a-zA-Z0-9_-]*)\n?([\s\S]*?)(?:```|$)/g, (match, lang, code) => {
+        const index = codeBlocks.length;
+        const cleanLang = (lang || "code").trim().toLowerCase();
+        codeBlocks.push({ lang: cleanLang, code: code });
+        return `___CODE_BLOCK_${index}___`;
+      });
+
+      // Step 2: Escape HTML for non-code text to prevent XSS
+      text = escapeHtml(text);
+
+      // Step 3: Parse Tables
+      text = text.replace(/(?:(?:^|\n)\|[^\n]+\|\n\|[-:\s|]+\|\n(?:\|[^\n]+\|\n?)+)/g, (tableMatch) => {
+        const rows = tableMatch.trim().split("\n");
+        if (rows.length < 3) return tableMatch;
+        
+        const parseRow = (rowStr) => rowStr.split("|").slice(1, -1).map(c => c.trim());
+        const headers = parseRow(rows[0]);
+        const dataRows = rows.slice(2).map(parseRow);
+
+        let html = `<table><thead><tr>`;
+        headers.forEach(h => html += `<th>${formatInlineMarkdown(h)}</th>`);
+        html += `</tr></thead><tbody>`;
+        dataRows.forEach(row => {
+          html += `<tr>`;
+          row.forEach(c => html += `<td>${formatInlineMarkdown(c)}</td>`);
+          html += `</tr>`;
+        });
+        html += `</tbody></table>`;
+        return html;
+      });
+
+      // Step 4: Line by line processing for block structures
+      const lines = text.split("\n");
+      const resultLines = [];
+      let inList = false;
+      let listType = ""; // "ul" or "ol"
+      let inBlockquote = false;
+      let bqBuffer = [];
+
+      function closeList() {
+        if (inList) {
+          resultLines.push(`</${listType}>`);
+          inList = false;
+          listType = "";
+        }
+      }
+
+      function closeBlockquote() {
+        if (inBlockquote) {
+          resultLines.push(`<blockquote><p>${bqBuffer.map(formatInlineMarkdown).join("<br>")}</p></blockquote>`);
+          inBlockquote = false;
+          bqBuffer = [];
+        }
+      }
+
+      for (let line of lines) {
+        // Code block placeholder line check
+        if (line.includes("___CODE_BLOCK_")) {
+          closeList();
+          closeBlockquote();
+          resultLines.push(line);
+          continue;
+        }
+
+        // Horizontal rules
+        if (/^(---|___|\*\*\*)\s*$/.test(line.trim())) {
+          closeList();
+          closeBlockquote();
+          resultLines.push("<hr>");
+          continue;
+        }
+
+        // Headings
+        const headingMatch = line.match(/^(#{1,6})\s+(.*)$/);
+        if (headingMatch) {
+          closeList();
+          closeBlockquote();
+          const level = headingMatch[1].length;
+          const content = formatInlineMarkdown(headingMatch[2]);
+          resultLines.push(`<h${level}>${content}</h${level}>`);
+          continue;
+        }
+
+        // Blockquotes
+        const bqMatch = line.match(/^&gt;\s?(.*)$/);
+        if (bqMatch) {
+          closeList();
+          inBlockquote = true;
+          bqBuffer.push(bqMatch[1]);
+          continue;
+        } else {
+          closeBlockquote();
+        }
+
+        // Unordered lists
+        const ulMatch = line.match(/^[\*\-\+]\s+(.*)$/);
+        if (ulMatch) {
+          closeBlockquote();
+          if (!inList || listType !== "ul") {
+            closeList();
+            resultLines.push("<ul>");
+            inList = true;
+            listType = "ul";
+          }
+          resultLines.push(`<li>${formatInlineMarkdown(ulMatch[1])}</li>`);
+          continue;
+        }
+
+        // Ordered lists
+        const olMatch = line.match(/^\d+\.\s+(.*)$/);
+        if (olMatch) {
+          closeBlockquote();
+          if (!inList || listType !== "ol") {
+            closeList();
+            resultLines.push("<ol>");
+            inList = true;
+            listType = "ol";
+          }
+          resultLines.push(`<li>${formatInlineMarkdown(olMatch[1])}</li>`);
+          continue;
+        }
+
+        // Standard text line
+        closeList();
+        closeBlockquote();
+        const trimmed = line.trim();
+        if (trimmed.length > 0) {
+          resultLines.push(`<p>${formatInlineMarkdown(line)}</p>`);
+        }
+      }
+
+      closeList();
+      closeBlockquote();
+
+      let htmlResult = resultLines.join("\n");
+
+      // Step 5: Restore fenced code blocks into ChatGPT-style containers
+      htmlResult = htmlResult.replace(/___CODE_BLOCK_(\d+)___/g, (match, index) => {
+        const block = codeBlocks[parseInt(index, 10)];
+        if (!block) return "";
+        const escapedCode = escapeHtml(block.code);
+        const displayLang = block.lang || "code";
+        const highlightedCode = highlightCode(escapedCode, displayLang);
+        return `<div class="code-block-container">
+          <div class="code-block-header">
+            <span>${displayLang}</span>
+            <button class="copy-btn" type="button"><span>📋</span><span>Copy</span></button>
+          </div>
+          <pre class="code-block-body"><code class="code-block-code">${highlightedCode}</code></pre>
+        </div>`;
+      });
+
+      return htmlResult;
+    }
+
+    function highlightCode(escapedCode, lang) {
+      if (!escapedCode) return "";
+      let html = escapedCode;
+      if (lang === 'python' || lang === 'py') {
+        html = html
+          .replace(/(#.*)/g, '<span class="token-comment">$1</span>')
+          .replace(/(&quot;.*?&quot;|&#039;.*?&#039;)/g, '<span class="token-string">$1</span>')
+          .replace(/\b(if|else|elif|for|while|try|except|finally|return|yield|break|continue|pass|raise)\b/g, '<span class="token-control">$1</span>')
+          .replace(/\b(import|from|def|class|lambda|global|nonlocal|assert|del|with|as|in|is|and|or|not|True|False|None)\b/g, '<span class="token-keyword">$1</span>')
+          .replace(/\b(\d+)\b/g, '<span class="token-number">$1</span>')
+          .replace(/\b([a-zA-Z_]\w*)(?=\s*\()/g, '<span class="token-function">$1</span>');
+      } else if (lang === 'javascript' || lang === 'js' || lang === 'ts') {
+        html = html
+          .replace(/(\/\/.*)/g, '<span class="token-comment">$1</span>')
+          .replace(/(&quot;.*?&quot;|&#039;.*?&#039;|`.*?`)/g, '<span class="token-string">$1</span>')
+          .replace(/\b(if|else|for|while|try|catch|finally|return|break|continue|switch|case|default|throw)\b/g, '<span class="token-control">$1</span>')
+          .replace(/\b(import|export|from|function|class|const|let|var|new|await|async|yield|true|false|null|undefined|this|typeof|instanceof)\b/g, '<span class="token-keyword">$1</span>')
+          .replace(/\b(\d+)\b/g, '<span class="token-number">$1</span>')
+          .replace(/\b([a-zA-Z_]\w*)(?=\s*\()/g, '<span class="token-function">$1</span>');
+      } else if (lang === 'html' || lang === 'xml') {
+        html = html
+          .replace(/(&lt;!--.*?--&gt;)/g, '<span class="token-comment">$1</span>')
+          .replace(/(&lt;\/?)([a-zA-Z0-9:-]+)/g, '$1<span class="token-keyword">$2</span>')
+          .replace(/([a-zA-Z0-9:-]+)(=)(&quot;.*?&quot;|&#039;.*?&#039;)/g, '<span class="token-function">$1</span>$2<span class="token-string">$3</span>');
+      } else {
+        html = html
+          .replace(/(&quot;.*?&quot;|&#039;.*?&#039;)/g, '<span class="token-string">$1</span>')
+          .replace(/\b(\d+)\b/g, '<span class="token-number">$1</span>');
+      }
+      return html;
+    }
+
+    function formatInlineMarkdown(str) {
+      if (!str) return "";
+      let s = str;
+      // Inline code
+      s = s.replace(/`([^`]+)`/g, (match, codeStr) => `<code>${codeStr}</code>`);
+      // Bold
+      s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      s = s.replace(/__([^_]+)__/g, '<strong>$1</strong>');
+      // Italic
+      s = s.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+      s = s.replace(/_([^_]+)_/g, '<em>$1</em>');
+      // Links
+      s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+      return s;
+    }
+
     fetch("/api/health").then(r => r.json()).then(() => setHealth("ready")).catch(() => setHealth("api offline", true));
   </script>
 </body>
